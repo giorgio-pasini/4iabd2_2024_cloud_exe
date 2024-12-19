@@ -1,0 +1,22 @@
+services:
+  - type: web
+    plan: free
+    name: dgit_test
+    runtime: node
+    repo: https://github.com/giorgio-pasini/4iabd2_2024_cloud_exe
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    region: frankfurt
+    envVars:
+      - key: DATABASE_URL # Sets DATABASE_URL to the connection string of the django-app-db database
+        fromDatabase:
+          name: dgit_test-db
+          property: connectionString
+
+databases:
+  - name: dgit_test-db # Required
+    postgresMajorVersion: "16" # Default: most recent supported version
+    region: frankfurt # Default: oregon
+    plan: free # Default: basic-256mb
+    databaseName: dgit_test # Default: generated value based on name
+    user: dgit_test # Default: generated value based on name
